@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form</title>
+</head>
+<body>
+  <ul class="todoList">
+    {{ todoList }}
+  </ul>
+  <form id="form">
+    <input id="input" type="text">
+    <button type="submit">Ajouter</button>
+  </form>
+</body>
+<script>
+  function addTodo(string) {
+    fetch('http://localhost:3000/addtodo', {
+      method: "POST" ,
+      body: string
+    })
+      .then((response) => {
+        window.location.reload(true)
+      })
+      .catch(error => console.dir(error))
+  }
+  const form = document.querySelector('#form')
+  form.addEventListener("submit", (e) => {
+    e.preventDefault()
+    const newTodo = document.querySelector("#input").value
+    addTodo(newTodo)
+  })
+</script>
+</html>
