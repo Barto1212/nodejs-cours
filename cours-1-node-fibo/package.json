@@ -1,0 +1,18 @@
+{
+  "name": "nodejs-cours",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "fibonacci.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
