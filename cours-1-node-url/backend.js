@@ -1,6 +1,6 @@
 const http = require('http')
 const url = require('url')
-const {readAllTodo, addToDo} = require('./BDD/index.js')
+const {readAllTodo, addToDo, deleteOneToDo} = require('./BDD/index.js')
 
 const textContent = {'Content-Type': 'text/plain; charset=UTF-8', "Access-Control-Allow-Origin": "*" }
 const jsonContent = { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }
@@ -18,17 +18,28 @@ const getRequest = async (req, res) => {
 
 const handle404 = (req, res) => {
   res.writeHead(404, textContent)
-  res.end('Uniquement des requètes get')
+  res.end('requète non codée')
 }
 
 const postRequest = (req, res) => {
-  const clientUrl = url.parse(req.url, true).query
-  const todo = clientUrl.todo
-  addToDo(todo)
-  res.writeHead(201, textContent).end('ok')
+  const clientRequest = url.parse(req.url, true)
+  const todo = clientRequest.query.todo
+  switch (clientRequest.pathname) {
+    case '/add':
+      addToDo(todo)
+      res.writeHead(201, textContent).end('ajouté')
+      break
+    case '/delete':
+      deleteOneToDo(todo)
+      res.writeHead(204, textContent).end('supprimé')
+      break
+    default:
+      handle404(res, res)
+      break
+  }
 }
 
-const serverToDoBackend = http.createServer((req, res) => {
+const backendServer = http.createServer((req, res) => {
   switch (req.method) {
     case 'GET':
       getRequest(req, res)
@@ -42,4 +53,4 @@ const serverToDoBackend = http.createServer((req, res) => {
   }
 })
 
-module.exports = serverToDoBackend
+module.exports = backendServer

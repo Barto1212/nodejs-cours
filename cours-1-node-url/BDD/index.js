@@ -2,13 +2,18 @@ const yargs = require('yargs')
 const fs = require('fs')
 
 function addToDo (todo) {
-  fs.stat('./BDD/todoList.txt', (err, stat) => {
-    if (stat) {
+  try {
+    const todoList = fs.readFileSync('./BDD/todoList.txt', 'utf-8')
+    if (todoList !== '') {
       fs.appendFileSync('./BDD/todoList.txt',`\n${todo}`)
-    } else {
-      fs.writeFileSync('./BDD/todoList.txt',`${todo}`)
+      return
     }
-  })
+  } catch (error) {
+    if (error.errno !== -4058) {
+      throw new Error(error)
+    }
+  }
+  fs.writeFileSync('./BDD/todoList.txt',`${todo}`)
 }
 
 function readAllTodo () {
@@ -16,7 +21,7 @@ function readAllTodo () {
     const todos = fs.readFileSync('./BDD/todoList.txt', 'utf-8')
     return todos.split('\n')
   } catch (error) {
-    if (error.errno === -2) {
+    if (error.errno === -2 || error.errno === -4058) {
       // no todolist
       return []
     } else {
@@ -26,13 +31,12 @@ function readAllTodo () {
 }
 
 function deleteOneToDo (toDelete) {
-  fs.readFile('todoList.txt')
-    .then(todos => {
-      todosArray = todos.toString().split('\n')
-      const newToDoList = todosArray.filter(toDo => toDo !== toDelete)
-      fs.unlink('todoList.txt')
-        .then(() => newToDoList.forEach(todo => addToDo(todo)))
-    })
+    todosArray = readAllTodo()
+    console.log(todosArray);
+    const newToDoList = todosArray.filter(toDo => toDo !== toDelete)
+    console.log(newToDoList)
+    fs.unlinkSync('./BDD/todoList.txt')
+    newToDoList.forEach(todo => addToDo(todo))
 }
 
 const argv = yargs
@@ -75,4 +79,4 @@ if (argv.reset) {
   fs.unlink('todoList.txt')
 }
 
-module.exports = { readAllTodo, addToDo }
+module.exports = { readAllTodo, addToDo, deleteOneToDo }
