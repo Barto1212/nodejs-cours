@@ -1,8 +1,6 @@
 function addTodo(todo) {
   const postURL = new URL('http://localhost:4000')
-  const params = new URLSearchParams({todo: todo})
-  postURL.searchParams(params)
-  console.log(postURL);
+  postURL.searchParams.set('todo', todo)
 fetch(postURL,
   { method: 'POST' }
 )

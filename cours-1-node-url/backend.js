@@ -1,6 +1,6 @@
 const http = require('http')
 const url = require('url')
-const {readAllTodo} = require('./BDD/index.js')
+const {readAllTodo, addToDo} = require('./BDD/index.js')
 
 const textContent = {'Content-Type': 'text/plain; charset=UTF-8', "Access-Control-Allow-Origin": "*" }
 const jsonContent = { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }
@@ -22,10 +22,9 @@ const handle404 = (req, res) => {
 }
 
 const postRequest = (req, res) => {
-  // const clientUrl = url.parse(req.url, true)
-  const params = new URLSearchParams(req.url)
-  const todo = params.get('todo')
-  console.log(clientUrl.hash);
+  const clientUrl = url.parse(req.url, true).query
+  const todo = clientUrl.todo
+  addToDo(todo)
   res.writeHead(201, textContent).end('ok')
 }
 

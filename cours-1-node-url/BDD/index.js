@@ -1,11 +1,10 @@
 const yargs = require('yargs')
 const fs = require('fs')
-const stat = require('fs').stat
 
 function addToDo (todo) {
-  stat('todoList.txt', (err, stat) => {
+  fs.stat('./BDD/todoList.txt', (err, stat) => {
     if (stat) {
-      fs.writeFileSync('./BDD/todoList.txt',`\n${todo}`)
+      fs.appendFileSync('./BDD/todoList.txt',`\n${todo}`)
     } else {
       fs.writeFileSync('./BDD/todoList.txt',`${todo}`)
     }
@@ -76,4 +75,4 @@ if (argv.reset) {
   fs.unlink('todoList.txt')
 }
 
-module.exports = { readAllTodo }
+module.exports = { readAllTodo, addToDo }
