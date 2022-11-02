@@ -9,17 +9,18 @@ staticServer = http.createServer((req, res) => {
   if (method === 'GET') {
     if (url === '/') { 
       const redirectURL = new URL("http://localhost")
-      redirectURL.pathname = "/index"
+      redirectURL.pathname = "/index.html"
+      redirectURL.port = 3000
       res.writeHead(301, { "Location": redirectURL, ...cors })
       res.end()
       return
      }
-    fs.readFile(`./public${url}.html`)
+    fs.readFile(`./public${url}`)
       .then(data => {
         res.writeHead(200, {'Content-Type': 'text/html', ...cors })
         res.end(data)
       })
-      .catch(err =>{
+      .catch(err =>{ 
         if (err.errno === -2) {
           res.writeHead(404, contenuTexte)
           res.end('Page non trouvée')

@@ -1,5 +1,5 @@
-const serverToDoBackend = require("./serverToDoBackend.js")
-const staticServer = require('./staticServer.js')
+const backend = require("./backend.js")
+const static = require('./static.js')
 
-staticServer.listen(80, () => console.log('serveur front listen 80'))
-serverToDoBackend.listen(3000, () => console.log('serveur back listen 3000'))
+static.listen(3000, () => console.log('server front listen 3000'))
+backend.listen(4000, () => console.log('server back listen 4000'))

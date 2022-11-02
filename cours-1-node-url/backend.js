@@ -1,17 +1,14 @@
 const http = require('http')
 const url = require('url')
+const {readAllTodo} = require('./BDD/index.js')
 
 const textContent = {'Content-Type': 'text/plain; charset=UTF-8', "Access-Control-Allow-Origin": "*" }
 const jsonContent = { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }
 
-const toDoListBDD = [
-  'Faire la vaisselle',
-  'Regarder une série'
-]
-
-const getRequest = (req, res) => {
+const getRequest = async (req, res) => {
   if (req.url === '/todos') {
     res.writeHead(200,  jsonContent)
+    const toDoListBDD = readAllTodo()
     res.end(JSON.stringify(toDoListBDD))
   } else {
     res.writeHead(404, textContent)
@@ -24,10 +21,12 @@ const handle404 = (req, res) => {
   res.end('Uniquement des requètes get')
 }
 
-const putRequest = (req, res) => {
-  const clientUrl = url(req)
-  console.log(clientUrl);
-  res.writeHead(201).end('ok')
+const postRequest = (req, res) => {
+  // const clientUrl = url.parse(req.url, true)
+  const params = new URLSearchParams(req.url)
+  const todo = params.get('todo')
+  console.log(clientUrl.hash);
+  res.writeHead(201, textContent).end('ok')
 }
 
 const serverToDoBackend = http.createServer((req, res) => {
@@ -35,13 +34,9 @@ const serverToDoBackend = http.createServer((req, res) => {
     case 'GET':
       getRequest(req, res)
       break
-  
-    case 'PUT':
-      putRequest(req, res)
+    case 'POST':
+      postRequest(req, res)
       break
-    case 'OPTION':
-      console.log('option');
-
     default:
       handle404(req, res)
       break;

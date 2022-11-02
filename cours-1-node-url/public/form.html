@@ -14,33 +14,7 @@
     <button type="submit">Ajouter</button>
   </form>
 </body>
-<script>
-  function addTodo(string) {
-    fetch(`http://localhost:3000/addtodo?todo=${string}`,
-      { method: 'PUT' }
-    )
-      .then((response) => {
-        console.log(response)
-        window.location.reload(true)
-      })
-      .catch(error => console.dir(error))
-  }
-  const form = document.querySelector('#form')
-  form.addEventListener("submit", (e) => {
-    e.preventDefault()
-    const newTodo = document.querySelector("#input").value
-    addTodo(newTodo)
-  })
-  fetch('http://localhost:3000/todos')
-  .then(data => data.json())
-  .then(todoArray => {
-    const todoList = document.querySelector('#todoList')
-    console.log(todoArray);
-    todoArray.forEach(todo => {
-      const li = document.createElement('li')
-      li.innerHTML = todo
-      todoList.appendChild(li)
-    })
-  })
+<script src="http://localhost:3000/index.js">
+  
 </script>
 </html>

@@ -3,14 +3,6 @@ const yargs = require('yargs');
 const url = require('url');
 
 
-const myURL = new URL('http://localhost')
-myURL.port = 3000
-console.log(myURL);
-// myURL.pathname = 'posts'
-
-// fetch(myURL.href)
-//   .then(response => response.json())
-//   .then(data => console.log(data))
 
 const addToDo = (todo) => {
   myURL.pathname = "efzvf"
