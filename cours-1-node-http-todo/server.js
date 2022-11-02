@@ -15,9 +15,6 @@ function getList (todoArray) {
 }
 
 const server = http.createServer((req, res) => {
-  // res.setHeader('Access-Control-Allow-Origin', '*')
-  // res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization')
-  // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
   // ------GET REQUESTS------
   const  { url, method } = req
   if (method === "GET") {
