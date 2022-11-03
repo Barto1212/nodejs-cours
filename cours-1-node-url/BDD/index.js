@@ -1,4 +1,3 @@
-const yargs = require('yargs')
 const fs = require('fs')
 
 function addToDo (todo) {
@@ -9,7 +8,8 @@ function addToDo (todo) {
       return
     }
   } catch (error) {
-    if (error.errno !== -4058) {
+    // Si le fichier n'existe pas on ne tient pas compte de l'erreur
+    if (!(error.errno === -4058 || error.errno === -2)) {
       throw new Error(error)
     }
   }
@@ -32,51 +32,9 @@ function readAllTodo () {
 
 function deleteOneToDo (toDelete) {
     todosArray = readAllTodo()
-    console.log(todosArray);
     const newToDoList = todosArray.filter(toDo => toDo !== toDelete)
-    console.log(newToDoList)
     fs.unlinkSync('./BDD/todoList.txt')
     newToDoList.forEach(todo => addToDo(todo))
-}
-
-const argv = yargs
-  .option('add', {
-    alias: 'a',
-    description: 'create and save a todo in a file',
-    type: 'string'
-  })
-  .option('read', {
-    alias: 'l',
-    description: 'read all the todo in the file',
-    type: 'boolean'
-  })
-  .option('delete', {
-    alias: 'd',
-    description: 'delete a todo',
-    type: 'string'
-  })
-  .option('reset', {
-    alias: 'r',
-    description: 'delete all todos',
-    type: 'boolean'
-  })
-  .help()
-  .alias('help', 'h').argv
-
-if (argv.add) {
-  addToDo(argv.add)
-}
-
-if (argv.read) {
-  readAllTodo(argv.add)
-}
-
-if (argv.delete) {
-  deleteOneToDo(argv.delete)
-}
-
-if (argv.reset) {
-  fs.unlink('todoList.txt')
 }
 
 module.exports = { readAllTodo, addToDo, deleteOneToDo }
