@@ -1,15 +1,16 @@
 {
-  "name": "cours-1-node-process",
+  "name": "1-2_p39",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "yargs": "^17.6.0"
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }

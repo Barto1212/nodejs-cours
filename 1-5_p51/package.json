@@ -1,5 +1,6 @@
 {
   "name": "cours-1-node-pizza",
+  "type": "commonjs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
