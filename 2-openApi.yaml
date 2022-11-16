@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: E Commerce - OpenAPI 3.0
+  description: "Basic api to handle e-commerce website"
+  version: 1.0.0
+paths:
+  /articles:
+    get:
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Article"
+  /article/{articleId}:
+    get:
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'          
+        '404':
+          description: Article not found
+    delete:
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Article deleted
+        '404':
+          description: Article not found
+  /article:
+    post:
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Article'
+        '405':
+          description: Invalid input
+  /card/{articleId}:
+    patch:
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: "Sucessful added to your cart"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Article"
+        '404':
+          description: "Article not found"
+  /card/pay:
+    post:
+      requestBody:
+          description: Pay all articles in your card
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  cardNumber: 
+                    type: number
+                    format: int32
+          required: true
+      responses:
+        '202':
+          description: "Paiement accepted"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/Article"
+        '402':
+          description: "paiement refused"
+components:
+  schemas:
+    Article:
+      required:
+        - name
+        - id
+        - price
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1532
+        name:
+          type: string
+          example: "chaise"
+        description:
+          type: string
+          example: "permet de s'assoir"
+        price:
+          type: string
+          example: "15€"
