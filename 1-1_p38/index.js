@@ -1,3 +1,3 @@
-import fibonacci from "./fibonacci.js"
+import fibonacci from "./fibonacci.js";
 
-console.log(fibonacci(7));
+console.log(fibonacci(12));

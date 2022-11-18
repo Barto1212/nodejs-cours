@@ -1,21 +1,21 @@
 const yargs = require("yargs");
-const fs = require("fs/promises");
+const fs = require("fs");
 const stat = require("fs").stat;
 
 function addToDo(todo) {
   stat("todoList.txt", (err, stat) => {
     if (stat) {
-      fs.appendFile("todoList.txt", `\n${todo}`);
+      fs.appendFileSync("todoList.txt", `\n${todo}`);
     } else {
-      fs.appendFile("todoList.txt", `${todo}`);
+      fs.appendFileSync("todoList.txt", `${todo}`);
     }
   });
 }
 
-async function readAllTodo() {
+function readAllTodo() {
   try {
-    const todos = fs.readFile("todoList.txt");
-    console.log((await todos).toString());
+    const todos = fs.readFileSync("todoList.txt");
+    console.log(todos.toString());
   } catch (error) {
     // Pas d'erreur si fichier inexistant
     if (error.errno !== -2) {
@@ -25,13 +25,11 @@ async function readAllTodo() {
 }
 
 function deleteOneToDo(toDelete) {
-  fs.readFile("todoList.txt").then((todos) => {
-    todosArray = todos.toString().split("\n");
-    const newToDoList = todosArray.filter((toDo) => toDo !== toDelete);
-    fs.unlink("todoList.txt").then(() =>
-      newToDoList.forEach((todo) => addToDo(todo))
-    );
-  });
+  const todos = fs.readFileSync("todoList.txt");
+  todosArray = todos.toString().split("\n");
+  const newToDoList = todosArray.filter((toDo) => toDo !== toDelete);
+  fs.unlinkSync("todoList.txt");
+  newToDoList.forEach((todo) => addToDo(todo));
 }
 
 const argv = yargs
@@ -71,5 +69,5 @@ if (argv.delete) {
 }
 
 if (argv.reset) {
-  fs.unlink("todoList.txt");
+  fs.unlinkSync("todoList.txt");
 }

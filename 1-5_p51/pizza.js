@@ -7,7 +7,8 @@ const argv = yargs
   })
   .option("size", {
     description: "choose format",
-    type: "array",
+    type: "string",
+    choices: ["s", "m", "l", "xl"],
   })
   .option("toping", {
     alias: "t",
