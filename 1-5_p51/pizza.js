@@ -13,7 +13,7 @@ const argv = yargs
   .option("toping", {
     alias: "t",
     description: "choose toping",
-    type: "array",
+    type: "string",
     choices: ["mushroom", "bacon", "onion", "artichoke"],
   })
   .help()
