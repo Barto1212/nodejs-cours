@@ -1,51 +1,37 @@
 import express from "express";
-import bodyParser from "body-parser";
-import multer from "multer";
-
 const app = express();
 
-// Voir doc Express
-const upload = multer(); // for parsing multipart/form-data
-
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-let hits = {};
+const logger = {};
 app.all("*", (req, res, next) => {
-  console.log(req.method);
-  const resumeRequest = req.method + " " + req.url;
-  if (Object.keys(hits).includes(resumeRequest)) {
-    hits[resumeRequest] = hits[resumeRequest] + 1;
-  } else {
-    hits[resumeRequest] = 1;
-  }
-  console.log(hits);
+  const url = req.url;
+  // if (logger[url] !== undefined) {
+  //   logger[url] = logger[url] + 1
+  // } else {
+  //   logger[url] = 1
+  // }
+  logger[url] ? logger[url]++ : (logger[url] = 1);
+  console.log(logger);
   next();
 });
 
-app.post("/data", upload.array(), (req, res) => {
-  const data = req.body;
-  console.log("DATA CREATED :", req.body);
-  res.status(201).send("created");
+app.post("/", function (req, res) {
+  res.status(201).send("post");
 });
 
-app.get("/data/:dataId", upload.array(), (req, res) => {
-  const dataId = req.params.dataId;
-  console.log("READ DATA :", dataId);
-  res.status(200).send(`dataId : ${dataId}`);
+app.get("/", (req, res) => {
+  res.status(200).send("get");
 });
 
-app.put("/data/:dataId", upload.array(), (req, res) => {
-  const dataId = req.params.dataId;
-  const newData = { ...req.body };
-  console.log("UPDATE DATA :", dataId, "devient", newData);
-  res.status(201).send(`dataId : ${JSON.stringify(newData)}`);
+app.put("/", (req, res) => {
+  res.status(200).send("put");
 });
 
-app.delete("/data/:dataId", upload.array(), (req, res) => {
-  const dataId = req.params.dataId;
-  console.log("DELETE DATA :", dataId);
-  res.status(200).send(`dataId : ${JSON.stringify(newData)}`);
+app.patch("/", (req, res) => {
+  res.status(200).send("patch");
+});
+
+app.delete("/", (req, res) => {
+  res.status(200).send("delete");
 });
 
 app.listen(3000, () => console.log("listening 3000"));

@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use(upload.array());
 // ----------------------------------------------------------
 
-app.get("/articles", function (req, res) {
-  console.log(req.query);
+app.post("/", function (req, res) {
+  console.log(req.body);
   res.status(201).send("created");
 });
 
