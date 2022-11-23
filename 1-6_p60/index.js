@@ -27,7 +27,9 @@ function readAllTodo() {
 function deleteOneToDo(toDelete) {
   const todos = fs.readFileSync("todoList.txt");
   todosArray = todos.toString().split("\n");
-  const newToDoList = todosArray.filter((toDo) => toDo !== toDelete);
+  const newToDoList = todosArray.filter(function (toDo) {
+    return toDo !== toDelete;
+  });
   fs.unlinkSync("todoList.txt");
   newToDoList.forEach((todo) => addToDo(todo));
 }

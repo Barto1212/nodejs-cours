@@ -127,5 +127,6 @@ components:
           type: string
           example: "permet de s'assoir"
         price:
-          type: string
-          example: "15€"
+          type: number
+          description: "prix en centimes"
+          example: 15
