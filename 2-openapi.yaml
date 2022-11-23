@@ -4,7 +4,7 @@ info:
   description: "Basic api to handle e-commerce website"
   version: 1.0.0
 paths:
-  /articles:
+  /articles/all:
     get:
       responses:
         '200':
@@ -15,7 +15,7 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Article"
-  /article/{articleId}:
+  /articles/{articleId}:
     get:
       parameters:
         - name: articleId
@@ -44,7 +44,7 @@ paths:
           description: Article deleted
         '404':
           description: Article not found
-  /article:
+  /articles:
     post:
       requestBody:
         description: Create a new pet in the store
@@ -65,7 +65,20 @@ paths:
                 $ref: '#/components/schemas/Article'
         '405':
           description: Invalid input
-  /card/{articleId}:
+  /cart/all:
+    get:
+      responses:
+        '200':
+          description: "Sucessful added to your cart"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Article"
+        '404':
+          description: "Article not found"
+  /cart/{articleId}:
     patch:
       parameters:
         - name: articleId
@@ -84,7 +97,7 @@ paths:
                   $ref: "#/components/schemas/Article"
         '404':
           description: "Article not found"
-  /card/pay:
+  /cart/pay:
     post:
       requestBody:
           description: Pay all articles in your card
