@@ -43,4 +43,14 @@ router.get("/cart", (req, res) => {
   res.status(200).json(BDD.cart);
 });
 
+router.get("/articles/:id", (req, res) => {
+  const { id } = req.params; // req.params = {id: dezf, name: fr}
+  const article = BDD.articles.find((element) => element.id == id);
+  console.log(id, article);
+  if (article === undefined) {
+    res.status(404).send("objet non trouvé");
+  }
+  res.status(200).json(article);
+});
+
 export default router;
