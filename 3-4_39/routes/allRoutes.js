@@ -24,12 +24,6 @@ const BDD = {
   ],
   cart: [],
 };
-router.get("/articles", (req, res) => {
-  res.status(200).json(BDD.articles);
-});
-router.get("/cart", (req, res) => {
-  res.status(200).json(BDD.cart);
-});
 function addToCart(article) {
   if (BDD.articles[article].nb > 0) {
     BDD.articles[article].nb--;
@@ -42,23 +36,11 @@ function addToCart(article) {
     throw new Error("no left");
   }
 }
-
-router.patch("/cart/:article", (req, res) => {
-  const { article } = req.params;
-  if (BDD.articles[article]) {
-    try {
-      addToCart(article);
-    } catch (error) {
-      res.status(403).json(error.message);
-      return;
-    }
-  } else {
-    res.status(404).send("Cet article n'existe pas");
-    return;
-  }
-  res.status(201).json({ cart: BDD.cart });
+router.get("/articles/all", (req, res) => {
+  res.status(200).json(BDD.articles);
 });
-
-router.delete("/article/:id", (req, res) => {});
+router.get("/cart", (req, res) => {
+  res.status(200).json(BDD.cart);
+});
 
 export default router;
