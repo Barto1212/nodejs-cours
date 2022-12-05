@@ -88,5 +88,9 @@ router.post("/articles", (req, res) => {
     res.status(405).send("Champ manquant");
   }
 });
+// ----------------------------------      PATCH /cart/{articleId}      ----------------------------------
 
+router.patch('/cart/:articleId', (req, res) => {
+  const articleId = req.params.articleId
+})
 export default router;
