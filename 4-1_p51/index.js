@@ -2,9 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import create from "./controlers/create.js";
-// import read from "./controlers/read.js";
-// import update from "./controlers/update.js";
-// import del from "./controlers/del.js";
+import read from "./controlers/read.js";
+import update from "./controlers/update.js";
+import del from "./controlers/del.js";
 
 const app = express();
 
@@ -18,8 +18,8 @@ mongoose
 app.use(bodyParser.json()); // for parsing application/json
 
 app.post("/", create);
-// app.get("/", read);
-// app.put("/", update);
-// app.delete("/", del);
+app.get("/", read);
+app.put("/:id", update);
+app.delete("/:id", del);
 
 app.listen(3000, console.log("listen on 3000"));

@@ -4,10 +4,11 @@ const create = async (req, res) => {
   try {
     const { email, pwd } = req.body;
     const newUser = new User({ email, pwd });
-    await newUser.save();
-    res.status(201);
+    const savedUser = await newUser.save();
+    res.status(201).send(savedUser);
   } catch (error) {
-    console.log(retour);
+    res.sendStatus(500);
+    console.log(error);
   }
 };
 
