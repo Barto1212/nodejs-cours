@@ -146,7 +146,7 @@ components:
         id:
           type: number
           example: 1532
-        name:
+        label:
           type: string
           example: "chaise"
         description:
