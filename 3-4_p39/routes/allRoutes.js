@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-const BDD = {
+let BDD = {
   articles: [
     {
       id: 0,
@@ -88,9 +88,66 @@ router.post("/articles", (req, res) => {
     res.status(405).send("Champ manquant");
   }
 });
-// ----------------------------------      PATCH /cart/{articleId}      ----------------------------------
 
-router.patch('/cart/:articleId', (req, res) => {
-  const articleId = req.params.articleId
-})
+// ----------------------------------      PATCH /cart/{articleId}      ----------------------------------
+router.patch("/cart/:articleId", (req, res) => {
+  const articleId = req.params.articleId;
+  const addArticle = BDD.articles.find((element) => element.id == articleId);
+  if (addArticle === undefined) {
+    res.status(404).send("objet non trouvé");
+    return;
+  }
+  BDD.cart.push(addArticle);
+  res.sendStatus(201);
+});
+
+// ----------------------------------      DELETE /cart/{articleId}      ----------------------------------
+router.delete("/cart/:articleId", (req, res) => {
+  const { articleId } = req.params;
+  const indexToDelete = BDD.cart.findIndex(
+    (element) => element.id == articleId
+  );
+  if (indexToDelete === -1) {
+    res.status(404).send("objet non trouvé");
+    return;
+  }
+  const deletedArticle = BDD.cart[indexToDelete];
+  BDD.cart.splice(indexToDelete, 1);
+  res.status(200).send(deletedArticle);
+});
+// ----------------------------------      POST /cart/pay      ----------------------------------
+router.post("/cart/pay", (req, res) => {
+  const { cardNumber } = req.body;
+  if (cardNumber === undefined) {
+    res.status(405).send("Pas de carte renseignée");
+    return;
+  }
+  // Format : 4505 4585 0854 5420
+  const splitedCard = cardNumber.split(" ");
+  if (splitedCard.length !== 4) {
+    res.status(405).send("Format de carte non valide");
+    return;
+  }
+  let isValid = true;
+  splitedCard.forEach((element) => {
+    const elementNumber = Number(element);
+    isValid = isValid && !isNaN(elementNumber);
+  });
+  if (!isValid) {
+    res.status(405).send("Pas un number");
+    return;
+  }
+  splitedCard.forEach((element) => {
+    const elementNumber = Number(element);
+    isValid = isValid && !(elementNumber < 999 || elementNumber >= 9999);
+  });
+
+  if (!isValid) {
+    res.status(405).send("Un des digits trop grand ou trop petit");
+    return;
+  }
+  BDD.cart = [];
+  res.status(200).send("Paiement accepté");
+});
+
 export default router;
