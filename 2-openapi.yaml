@@ -7,7 +7,7 @@ paths:
   /articles/all:
     get:
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
@@ -24,13 +24,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Article'          
-        '404':
+                $ref: "#/components/schemas/Article"
+        "404":
           description: Article not found
     delete:
       parameters:
@@ -40,9 +40,9 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Article deleted
-        '404':
+        "404":
           description: Article not found
   /articles:
     post:
@@ -51,24 +51,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Article'
+              $ref: "#/components/schemas/Article"
         required: true
       responses:
-        '200':
+        "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Article'          
+                $ref: "#/components/schemas/Article"
             application/xml:
               schema:
-                $ref: '#/components/schemas/Article'
-        '405':
+                $ref: "#/components/schemas/Article"
+        "405":
           description: Invalid input
   /cart/all:
     get:
       responses:
-        '200':
+        "200":
           description: "Sucessful added to your cart"
           content:
             application/json:
@@ -76,8 +76,9 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Article"
-        '404':
+        "404":
           description: "Article not found"
+  /cart/{articleId}:
     delete:
       parameters:
         - name: articleId
@@ -86,11 +87,10 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Article deleted
-        '404':
+        "404":
           description: Article not found
-  /cart/{articleId}:
     patch:
       parameters:
         - name: articleId
@@ -99,40 +99,40 @@ paths:
           schema:
             type: string
       responses:
-        '201':
+        "201":
           description: "Sucessful added to your cart"
           content:
             application/json:
               schema:
                 type: "array"
-                items: 
+                items:
                   $ref: "#/components/schemas/Article"
-        '404':
+        "404":
           description: "Article not found"
-          
+
   /cart/pay:
     post:
       requestBody:
-          description: Pay all articles in your card
-          content:
-            application/json:
-              schema:
-                type: "object"
-                properties:
-                  cardNumber: 
-                    type: number
-                    format: int32
-          required: true
+        description: Pay all articles in your card
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                cardNumber:
+                  type: number
+                  format: int32
+        required: true
       responses:
-        '202':
+        "202":
           description: "Paiement accepted"
           content:
             application/json:
               schema:
                 type: "array"
-                items: 
+                items:
                   $ref: "#/components/schemas/Article"
-        '402':
+        "402":
           description: "paiement refused"
 components:
   schemas:
