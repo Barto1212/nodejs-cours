@@ -24,33 +24,20 @@ const BDD = {
   ],
   cart: [],
 };
-function addToCart(article) {
-  if (BDD.articles[article].nb > 0) {
-    BDD.articles[article].nb--;
-    if (BDD.cart[article]) {
-      BDD.cart[article].nb++;
-    } else {
-      BDD.cart[article] = { label: BDD.articles[article].label, nb: 1 };
-    }
-  } else {
-    throw new Error("no left");
-  }
-}
 router.get("/articles/all", (req, res) => {
   res.status(200).json(BDD.articles);
 });
-router.get("/cart", (req, res) => {
+router.get("/cart/all", (req, res) => {
   res.status(200).json(BDD.cart);
 });
-
 router.get("/articles/:id", (req, res) => {
   const { id } = req.params; // req.params = {id: dezf, name: fr}
   const article = BDD.articles.find((element) => element.id == id);
-  console.log(id, article);
   if (article === undefined) {
     res.status(404).send("objet non trouvé");
+    return;
   }
-  res.status(200).json(article);
+  res.status(200).send(article);
 });
 
 export default router;

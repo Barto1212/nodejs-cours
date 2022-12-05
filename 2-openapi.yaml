@@ -78,6 +78,18 @@ paths:
                   $ref: "#/components/schemas/Article"
         '404':
           description: "Article not found"
+    delete:
+      parameters:
+        - name: articleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Article deleted
+        '404':
+          description: Article not found
   /cart/{articleId}:
     patch:
       parameters:
@@ -97,6 +109,7 @@ paths:
                   $ref: "#/components/schemas/Article"
         '404':
           description: "Article not found"
+          
   /cart/pay:
     post:
       requestBody:
