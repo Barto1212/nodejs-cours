@@ -9,6 +9,10 @@ const del = async (req, res) => {
     }
     res.status(200).send(removed);
   } catch (error) {
+    if (error.kind && error.kind === "ObjectId") {
+      res.sendStatus(404);
+      return;
+    }
     res.sendStatus(500);
     console.log(error);
   }

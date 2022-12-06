@@ -5,6 +5,7 @@ import create from "./controlers/create.js";
 import read from "./controlers/read.js";
 import update from "./controlers/update.js";
 import del from "./controlers/del.js";
+import counter from "./middlewares/counter.js";
 
 const app = express();
 
@@ -16,6 +17,8 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use(bodyParser.json()); // for parsing application/json
+
+app.use(counter);
 
 app.post("/", create);
 app.get("/", read);
