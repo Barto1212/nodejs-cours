@@ -1,3 +1,10 @@
+// let counterVariable = {
+//   POST: 0,
+//   GET: 0,
+//   DELETE: 0,
+//   PUT: 0,
+// };
+
 import Counter from "../models/Counter.js";
 
 async function counter(req, res, next) {
@@ -10,20 +17,17 @@ async function counter(req, res, next) {
     next();
   }
   const count = counter[0];
-  console.log(count);
-  if (count[method]) {
-    const savedCounter = await Counter.findOneAndUpdate(
-      { _id: count._id },
-      {
-        GET: 2,
-      }
-    );
-    console.log(savedCounter);
+
+  if (counter[0][method]) {
+    const savedCounter = await Counter.findByIdAndUpdate(counter[0]._id, {
+      [method]: counter[0][method] + 1,
+    });
     next();
   }
-  const savedCounter = await Counter.findByIdAndUpdate(count._id, {
+  const savedCounter = await Counter.findByIdAndUpdate(counter[0]._id, {
     [method]: 1,
   });
+
   next();
 }
 export default counter;
