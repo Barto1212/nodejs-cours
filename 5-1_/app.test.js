@@ -4,11 +4,9 @@ const assert = require("assert/strict");
 const mongo = require("./utils/mongo.js");
 
 describe("Test De notre Routeur", () => {
+  // Initialiser mongoDB avant les tests :
   before(mongo.connect);
-
-  // beforeAll(() => {
-  //   mongo.connect();
-  // });
+  // On se déconnecte à la fin :
   after(mongo.disconnect);
 
   it("GET", () => {
@@ -19,7 +17,6 @@ describe("Test De notre Routeur", () => {
         assert.equal(typeof response.body, "object");
         response.body.forEach((user) => {
           const props = Object.keys(user).join("-");
-          console.log(props);
           assert.equal(props, "_id-email-pwd-cart-__v");
         });
       });
