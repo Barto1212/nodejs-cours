@@ -12,7 +12,7 @@ app.use(bodyParser.json()); // for parsing application/json
 
 // app.use(counter);
 
-// app.post("/", create);c
+// app.post("/", create);
 app.get("/", read);
 // app.put("/:id", update);
 // app.delete("/:id", del);

@@ -1,17 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
-import multer from "multer";
-import allRoutes from "./routes/allRoutes.js";
-import userAuth from "./middlewares/userAuth.js";
+import articlesRoutes from "./routes/articlesRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import connectMongoDb from "./connectMongoDB.js";
 // --------------------------CONFIG EXPRESS--------------------------
 const app = express();
-const upload = multer();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(upload.array());
 // ----------------------------FIN EXPRESS--------------------------
-
+connectMongoDb();
 // -------------------------------ROUTES-----------------------------
-app.use("/", allRoutes);
+app.use("/articles", articlesRoutes);
+app.use("/cart", cartRoutes);
 
 app.listen(3000, () => console.log("listening 3000"));
