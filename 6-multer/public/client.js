@@ -1,6 +1,7 @@
 function send(e) {
   // Eviter le comportement par défault :
   e.preventDefault();
+  console.log("sending...");
 
   // Ajouter du body :
   const fileField = document.querySelector('input[type="file"]');
@@ -13,7 +14,7 @@ function send(e) {
     method: "POST",
     body: formData,
   })
-    .then((response) => response.json())
+    .then((response) => {response.json()})
     .then((result) => {
       console.log("Success:", result);
     })
