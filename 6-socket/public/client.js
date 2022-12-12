@@ -15,7 +15,5 @@ socket.on("canal 1", (msg) => {
   const ul = document.querySelector("#ul");
   const li = document.createElement("li");
   li.innerHTML = msg;
-  // const text = document.createTextNode(msg);
-  // li.appendChild(text);
   ul.appendChild(li);
 });
