@@ -3,6 +3,8 @@ import User from "../models/User.js";
 const update = async (req, res) => {
   try {
     const { email, pwd } = req.body;
+    // const email = req.body.email
+    // const pwd = req.body.pwd
     if (!email || !pwd) {
       res.sendStatus(400);
       return;

@@ -14,7 +14,8 @@ input.focus();
 socket.on("canal 1", (msg) => {
   const ul = document.querySelector("#ul");
   const li = document.createElement("li");
-  const text = document.createTextNode(msg);
-  li.appendChild(text);
+  li.innerHTML = msg;
+  // const text = document.createTextNode(msg);
+  // li.appendChild(text);
   ul.appendChild(li);
 });

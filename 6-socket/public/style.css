@@ -37,14 +37,14 @@ body {
   color: #fff;
 }
 
-#messages {
+#ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-#messages > li {
+#ul > li {
   padding: 0.5rem 1rem;
 }
-#messages > li:nth-child(odd) {
+#ul > li:nth-child(odd) {
   background: #efefef;
 }
