@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import multer from "multer";
 import allRoutes from "./routes/allRoutes.js";
-import userAuth from "./middlewares/userAuth.js";
 // --------------------------CONFIG EXPRESS--------------------------
 const app = express();
 const upload = multer();
